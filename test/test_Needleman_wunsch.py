@@ -35,7 +35,7 @@ def test_needleman_wunsch() -> None:
     # Test case 5: Verbose Output
     assert needleman_wunsch("ACTGC", "ACTCA", 1, -1, -1, True) == (
         "Alignment Score: 2\nACTGC-\n||| | \nACT-CA"
-        )
+    )
 
 
 test_needleman_wunsch()

@@ -41,19 +41,18 @@ def needleman_wunsch(
     for i in range(1, seq1_length + 1):
         for j in range(1, seq2_length + 1):
             # check for match
-            if seq1[i-1] == seq2[j-1]:
+            if seq1[i - 1] == seq2[j - 1]:
                 # diagonal add match score
-                diagonal = score_matrix[i-1][j-1] + match_score
+                diagonal = score_matrix[i - 1][j - 1] + match_score
             else:
                 # diagonal add penalty
-                diagonal = score_matrix[i-1][j-1] + mismatch_score
+                diagonal = score_matrix[i - 1][j - 1] + mismatch_score
             # check insert and deletion add penalty
-            delete = score_matrix[i-1][j] + gap_penalty
-            insert = score_matrix[i][j-1] + gap_penalty
+            delete = score_matrix[i - 1][j] + gap_penalty
+            insert = score_matrix[i][j - 1] + gap_penalty
 
             # get the max value
             score_matrix[i][j] = max(diagonal, insert, delete)
-
     # store the alginment score from bottom right of matrix
     alignment_score: int = score_matrix[seq1_length][seq2_length]
     # placeholder strings for our alginment
@@ -78,50 +77,62 @@ def needleman_wunsch(
     # so the time complextiy is O(N+M)
     while trc1 > 0 or trc2 > 0:
         # check if it was a diagonal move
-        if (trc1 > 0 and trc2 > 0 and score_matrix[trc1][trc2] ==
-            score_matrix[trc1-1][trc2-1] + (match_score if seq1[trc1-1] ==
-                                            seq2[trc2-1] else mismatch_score)):
+        if (
+            trc1 > 0
+            and trc2 > 0
+            and score_matrix[trc1][trc2]
+            == score_matrix[trc1 - 1][trc2 - 1]
+            + (match_score if seq1[trc1 - 1] == seq2[trc2 - 1]
+               else mismatch_score)
+        ):
             # add values to both strings
-            aligned_seq1 = seq1[trc1-1] + aligned_seq1
-            aligned_seq2 = seq2[trc2-1] + aligned_seq2
+            aligned_seq1 = seq1[trc1 - 1] + aligned_seq1
+            aligned_seq2 = seq2[trc2 - 1] + aligned_seq2
             # if they are the same
-            if seq1[trc1-1] == seq2[trc2-1]:
+            if seq1[trc1 - 1] == seq2[trc2 - 1]:
                 # indicate match in match string
-                match_string = '|' + match_string
+                match_string = "|" + match_string
             else:
                 # indicate a msimatch in the match string
-                match_string = '.' + match_string
+                match_string = "." + match_string
             trc1 -= 1
             trc2 -= 1
-
         # check if it was a vertical move
-        elif (trc1 > 0 and score_matrix[trc1][trc2] ==
-                score_matrix[trc1-1][trc2] + gap_penalty):
+        elif (
+            trc1 > 0
+            and score_matrix[trc1][trc2] ==
+            score_matrix[trc1 - 1][trc2] + gap_penalty
+        ):
             # add value to seq 1
-            aligned_seq1 = seq1[trc1-1] + aligned_seq1
+            aligned_seq1 = seq1[trc1 - 1] + aligned_seq1
             # add - to seq 2
             aligned_seq2 = "-" + aligned_seq2
             # match string is open
-            match_string = ' ' + match_string
+            match_string = " " + match_string
             trc1 -= 1
-
         # else it was a horizontal move
         else:
             # add - to seq 1
             aligned_seq1 = "-" + aligned_seq1
             # add value to seq 2
-            aligned_seq2 = seq2[trc2-1] + aligned_seq2
+            aligned_seq2 = seq2[trc2 - 1] + aligned_seq2
             # match string stays open
-            match_string = ' ' + match_string
+            match_string = " " + match_string
             trc2 -= 1
-
     # by default this is False
     # if verbose output the value in a nice string format
     # else output the values as a tuple
     if verbose:
-        string_out = ("Alignment Score: " + str(alignment_score) + "\n" +
-                      str(aligned_seq1) + "\n" + str(match_string) + "\n" +
-                      str(aligned_seq2))
+        string_out = (
+            "Alignment Score: "
+            + str(alignment_score)
+            + "\n"
+            + str(aligned_seq1)
+            + "\n"
+            + str(match_string)
+            + "\n"
+            + str(aligned_seq2)
+        )
         return string_out
     else:
         return alignment_score, aligned_seq1, aligned_seq2
