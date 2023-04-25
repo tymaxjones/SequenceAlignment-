@@ -76,19 +76,19 @@ def needleman_wunsch(
     # ------CCCCC
     # so the time complextiy is O(N+M)
     while trc1 > 0 or trc2 > 0:
+        # store values
+        matched = seq1[trc1 - 1] == seq2[trc2 - 1]
+        current_val = score_matrix[trc1][trc2]
+        diag_val = score_matrix[trc1 - 1][trc2 - 1]
+        vert_val = score_matrix[trc1 - 1][trc2]
+        mis_match_score = match_score if matched else mismatch_score
         # check if it was a diagonal move
-        if (
-            trc1 > 0
-            and trc2 > 0
-            and score_matrix[trc1][trc2]
-            == score_matrix[trc1 - 1][trc2 - 1]
-            + (match_score if seq1[trc1 - 1] == seq2[trc2 - 1] else mismatch_score)
-        ):
+        if trc1 > 0 and trc2 > 0 and current_val == diag_val + mis_match_score:
             # add values to both strings
             aligned_seq1 = seq1[trc1 - 1] + aligned_seq1
             aligned_seq2 = seq2[trc2 - 1] + aligned_seq2
             # if they are the same
-            if seq1[trc1 - 1] == seq2[trc2 - 1]:
+            if matched:
                 # indicate match in match string
                 match_string = "|" + match_string
             else:
@@ -97,10 +97,7 @@ def needleman_wunsch(
             trc1 -= 1
             trc2 -= 1
         # check if it was a vertical move
-        elif (
-            trc1 > 0
-            and score_matrix[trc1][trc2] == score_matrix[trc1 - 1][trc2] + gap_penalty
-        ):
+        elif trc1 > 0 and current_val == vert_val + gap_penalty:
             # add value to seq 1
             aligned_seq1 = seq1[trc1 - 1] + aligned_seq1
             # add - to seq 2
