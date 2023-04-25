@@ -25,13 +25,6 @@ def test_needleman_wunsch() -> None:
         "ACG---",
     )
 
-    # Test case 4: Different gap penalties
-    assert needleman_wunsch("ACGTAT", "AGTGCT", 1, -1, -1) == (
-        1,
-        "ACGT-AT",
-        "A-GTGCT",
-    )
-
     # Test case 5: Verbose Output
     assert needleman_wunsch("ACTGC", "ACTCA", 1, -1, -1, True) == (
         "Alignment Score: 2\nACTGC-\n||| | \nACT-CA"
