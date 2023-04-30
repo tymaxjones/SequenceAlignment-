@@ -4,8 +4,22 @@
 
 Create a library of sequence alignment tools from scratch including the following algorithms:
 
-* Smith-Waterman
-* Needleman-Wunsch
-* Multiple Alignment
+* Smith-Waterman: </br>
+* Needleman-Wunsch: </br>
 
-Include appropriate tests and documentation.
+* Multiple Alignment: </br>
+
+# Requirement packages:
+No specific package required
+
+# Installation
+import the module directly from the module in src directory.
+
+# Test:
+Some test functions are provided in the test.py under the foulder of `.test`
+using `pytest` framework.
+
+### 
+```{python}
+pytest tests/test_<name-of-algorithm-you-want-to-test>.py
+```
