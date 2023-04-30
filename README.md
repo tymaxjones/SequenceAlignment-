@@ -21,5 +21,5 @@ using `pytest` framework.
 
 ### 
 ```{python}
-pytest tests/test_<name-of-algorithm-you-want-to-test>.py
+pytest test/test_<name-of-algorithm-you-want-to-test>.py
 ```
