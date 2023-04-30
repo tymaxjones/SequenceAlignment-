@@ -1,5 +1,5 @@
 """Multiple Sequence Alignment Algorithm."""
-from typing import Tuple, Union, List, Optional
+from typing import Tuple, Union, List, Optional, Any
 import numpy as np
 from Needleman_wunsch import needleman_wunsch
 
@@ -100,7 +100,7 @@ def _profile_needleman_wunsch(
 
 
 def _add_gaps(
-    direction_matrix: list[List[int | str]],
+    direction_matrix: list[list[Union[int, str]]],
     prof1_seqs: list[str],
     prof2_seqs: list[str],
 ) -> tuple[list[str], list[str]]:
